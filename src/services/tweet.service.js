@@ -38,13 +38,18 @@ export const createTweet = async (tweetBody) => {
     }
 }
 
+// export const getTweets = async () => {
+//     try {
+//         const tweets = await getTweetsRepository();
+//         return tweets;
+//     } catch (error) {
+//         throw error;
+//     }
+// }
+
 export const getTweets = async () => {
-    try {
-        const tweets = await getTweetsRepository();
-        return tweets;
-    } catch (error) {
-        throw error;
-    }
+    const tweets = await getTweetsRepository();
+    return tweets;
 }
 
 export const getTweetById = async (tweetId) => {

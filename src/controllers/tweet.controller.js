@@ -7,13 +7,24 @@ import {
     updateTweetById as updateTweetByIdService,
     deleteTweet as deleteTweetService
 } from '../services/tweet.service.js';
+import { errorResponse, successResponse } from '../utils/responses.js';
+import { StatusCodes } from "http-status-codes";
 
-export const getTweets = asyncHandler(async (req, res) => {
-    const response = await getTweetsService();
-    return res.status(200).json(
-        new ApiResponse(200, response, "Tweets fetched successfully")
-    )
-})
+// export const getTweets = asyncHandler(async (req, res) => {
+//     const response = await getTweetsService();
+//     return res.status(200).json(
+//         new ApiResponse(200, response, "Tweets fetched successfully")
+//     )
+// })
+
+export const getTweets = async (req, res) => {
+    try {
+        const response = await getTweetsService();
+        return successResponse(response, StatusCodes.OK, 'Tweets fetched successfully', res);
+    } catch (error) {
+        return errorResponse(error, res);
+    }
+}
 
 export const getTweetById = asyncHandler(async (req, res) => {
     const { tweetId } = req.params;
