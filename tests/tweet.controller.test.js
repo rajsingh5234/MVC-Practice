@@ -1,6 +1,7 @@
 import { mockRequest, mockResponse } from "./mocker.js";
 import { getTweets } from "../src/controllers/tweet.controller.js";
 import tweetService from "../src/services/tweet.service.js";
+import { ApiError } from "../src/utils/apiError.js";
 
 jest.mock('../src/services/tweet.service.js', () => ({
 
@@ -35,21 +36,23 @@ test('should return tweets', async () => {
         success: true,
         message: 'Tweets fetched successfully',
         data: response,
+        statusCode: 200,
     })
 })
 
 test('should handle error when getTweets fails', async () => {
     const req = mockRequest();
     const res = mockResponse();
+    const next = jest.fn();
 
-    tweetService.getTweets.mockRejectedValue(new Error('Internal server error'));
+    tweetService.getTweets.mockRejectedValue(new ApiError(500, "Internal server error"));
 
-    await getTweets(req, res);
+    await getTweets(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({
+    expect(next).toHaveBeenCalledWith(expect.objectContaining({
+        statusCode: 500,
         success: false,
-        message: 'Internal server error',
-    })
-
+        message: "Internal server error",
+        data: null
+    }))
 })

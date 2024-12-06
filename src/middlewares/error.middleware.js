@@ -12,7 +12,7 @@ const errorMiddleware = (err, req, res, next) => {
         data
     }
 
-    if (errors?.lenght) {
+    if (errors?.length) {
         errObject.error = errors;
     }
 
