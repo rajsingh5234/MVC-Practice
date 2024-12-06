@@ -13,3 +13,7 @@ export const mockRequest = () => {
     req.query = jest.fn().mockReturnValue(req);
     return req;
 }
+
+export const mockNext = () => {
+    return jest.fn();
+}

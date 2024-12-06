@@ -1,4 +1,4 @@
-import { mockRequest, mockResponse } from "./mocker.js";
+import { mockNext, mockRequest, mockResponse } from "./mocker.js";
 import { getTweets } from "../src/controllers/tweet.controller.js";
 import tweetService from "../src/services/tweet.service.js";
 import { ApiError } from "../src/utils/apiError.js";
@@ -19,7 +19,7 @@ test('should return tweets', async () => {
 
     const req = mockRequest();
     const res = mockResponse();
-    const next = jest.fn();
+    const next = mockNext();
 
 
     const response = [
@@ -43,7 +43,7 @@ test('should return tweets', async () => {
 test('should handle error when getTweets fails', async () => {
     const req = mockRequest();
     const res = mockResponse();
-    const next = jest.fn();
+    const next = mockNext();
 
     tweetService.getTweets.mockRejectedValue(new ApiError(500, "Internal server error"));
 
