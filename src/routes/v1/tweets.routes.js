@@ -4,8 +4,11 @@ import { tweetIdValidator } from '../../validators/tweetManual.validator.js';
 import validate from '../../validators/zod.validator.js';
 import { tweetZodSchema } from '../../validators/tweet.zod.schema.js';
 import { upload } from '../../middlewares/multer.middleware.js';
+import { verifyJWT } from '../../middlewares/auth.middleware.js';
 
 const router = express.Router();
+
+router.use(verifyJWT);
 
 router.get('/', getTweets);
 

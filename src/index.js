@@ -4,8 +4,11 @@ import apiRouter from './routes/api.routes.js';
 import connectDB from './config/db.config.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import connectCloudinary from './config/cloudinary.config.js';
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.text());
